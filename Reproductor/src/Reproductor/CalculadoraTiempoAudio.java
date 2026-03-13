@@ -18,12 +18,14 @@ public class CalculadoraTiempoAudio {
             AudioFileFormat formato = AudioSystem.getAudioFileFormat(archivoAudio);
             long frames = formato.getFrameLength();
             float frameRate = formato.getFormat().getFrameRate();
-            int segundosTotales = (int) (frames / frameRate);
-            int minutos = segundosTotales / 60;
-            int segundos = segundosTotales % 60;
-            return String.format("%02d:%02d", minutos, segundos);
+            if (frames > 0 && frameRate > 0) {
+                int segundosTotales = (int) (frames / frameRate);
+                int minutos = segundosTotales / 60;
+                int segundos = segundosTotales % 60;
+                return String.format("%02d:%02d", minutos, segundos);
+            }
         } catch (Exception e) {
-            return "00:00";
         }
+        return "00:00"; 
     }
 }

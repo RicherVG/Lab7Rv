@@ -1,0 +1,35 @@
+src\Reproductor\MotorSonido.java:8: error: package javafx.embed.swing does not exist
+import javafx.embed.swing.JFXPanel;
+                         ^
+src\Reproductor\MotorSonido.java:9: error: package javafx.scene.media does not exist
+import javafx.scene.media.Media;
+                         ^
+src\Reproductor\MotorSonido.java:10: error: package javafx.scene.media does not exist
+import javafx.scene.media.MediaPlayer;
+                         ^
+src\Reproductor\MotorSonido.java:16: error: cannot find symbol
+    private MediaPlayer reproductor;
+            ^
+  symbol:   class MediaPlayer
+  location: class MotorSonido
+src\Reproductor\MotorSonido.java:27: error: cannot find symbol
+                new JFXPanel();
+                    ^
+  symbol:   class JFXPanel
+  location: class MotorSonido
+src\Reproductor\MotorSonido.java:39: error: cannot find symbol
+            Media mediaAudio = new Media(ruta);
+            ^
+  symbol:   class Media
+  location: class MotorSonido
+src\Reproductor\MotorSonido.java:39: error: cannot find symbol
+            Media mediaAudio = new Media(ruta);
+                                   ^
+  symbol:   class Media
+  location: class MotorSonido
+src\Reproductor\MotorSonido.java:40: error: cannot find symbol
+            reproductor = new MediaPlayer(mediaAudio);
+                              ^
+  symbol:   class MediaPlayer
+  location: class MotorSonido
+8 errors

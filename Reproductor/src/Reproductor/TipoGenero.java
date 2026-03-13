@@ -16,7 +16,7 @@ public enum TipoGenero {
     REGGAETON,
     ELECTRONICA,
     CLASICA,
-    JAZZ,
+    REGIONALMEXICANO,
     ROMANTICA,
     CRISTIANA,
     INSTRUMENTAL,

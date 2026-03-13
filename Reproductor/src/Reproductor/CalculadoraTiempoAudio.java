@@ -1,31 +1,58 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Reproductor;
 
 import java.io.File;
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioSystem;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import javafx.embed.swing.JFXPanel;
 
-/**
- *
- * @author riche
- */
 public class CalculadoraTiempoAudio {
+    private static boolean jfxIniciado = false;
+
+    private static void iniciarJFX() {
+        if (!jfxIniciado) {
+            try {
+                new JFXPanel();
+                jfxIniciado = true;
+            } catch (Exception e) {}
+        }
+    }
+
     public static String calcularDuracion(File archivoAudio) {
+        iniciarJFX();
+        final String[] resultado = {"00:00"};
+        CountDownLatch latch = new CountDownLatch(1);
+
         try {
-            AudioFileFormat formato = AudioSystem.getAudioFileFormat(archivoAudio);
-            long frames = formato.getFrameLength();
-            float frameRate = formato.getFormat().getFrameRate();
-            if (frames > 0 && frameRate > 0) {
-                int segundosTotales = (int) (frames / frameRate);
-                int minutos = segundosTotales / 60;
-                int segundos = segundosTotales % 60;
-                return String.format("%02d:%02d", minutos, segundos);
+            Media media = new Media(archivoAudio.toURI().toString());
+            MediaPlayer mediaPlayer = new MediaPlayer(media);
+
+            mediaPlayer.setOnReady(() -> {
+                Duration duration = media.getDuration();
+                if (duration != null) {
+                    int segundosTotales = (int) duration.toSeconds();
+                    int minutos = segundosTotales / 60;
+                    int segundos = segundosTotales % 60;
+                    resultado[0] = String.format("%02d:%02d", minutos, segundos);
+                }
+                mediaPlayer.dispose();
+                latch.countDown();
+            });
+
+            mediaPlayer.setOnError(() -> {
+                mediaPlayer.dispose();
+                latch.countDown();
+            });
+
+            if (!latch.await(2, TimeUnit.SECONDS)) {
+                mediaPlayer.dispose();
             }
         } catch (Exception e) {
+            return "00:00";
         }
-        return "00:00"; 
+        
+        return resultado[0];
     }
 }

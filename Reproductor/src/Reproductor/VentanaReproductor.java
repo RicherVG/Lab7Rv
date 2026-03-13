@@ -240,7 +240,7 @@ public class VentanaReproductor extends JFrame {
 
             JTextField txtNombre = new JTextField(archivoAudio.getName().replaceFirst("[.][^.]+$", ""));
             JTextField txtArtista = new JTextField();
-            JTextField txtDuracion = new JTextField(duracionAuto.equals("00:00") ? "" : duracionAuto);
+            JTextField txtDuracion = new JTextField(duracionAuto);
             JTextField txtPortada = new JTextField(portadaRuta);
             JButton btnBuscarPortada = new JButton("...");
             btnBuscarPortada.addActionListener(ev -> {
